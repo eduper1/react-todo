@@ -24,7 +24,14 @@ function handleSubmit(e) {
       <label className="todo-label" htmlFor={props.id}>
         New name for {props.name}
       </label>
-              <input id={props.id} className="todo-text" type="text" />
+            <input
+  id={props.id}
+  className="todo-text"
+  type="text"
+  value={newName}
+  onChange={handleChange}
+/>
+
 
     </div>
     <div className="btn-group">

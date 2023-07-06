@@ -32,8 +32,10 @@ function App(props) {
 }
 
 function deleteTask(id) {
-  console.log(id);
+  const remainingTasks = tasks.filter((task) => id !== task.id);
+  setTasks(remainingTasks);
 }
+
 
 
   const taskList = tasks.map((task) => (
@@ -44,11 +46,24 @@ function deleteTask(id) {
       key={task.id}
       toggleTaskCompleted={toggleTaskCompleted}
       deleteTask={deleteTask}
+      editTask={editTask}
     />
   ));
 
     const tasksNoun = taskList.length !== 1 ? "tasks" : "task";
     const headingText = `${taskList.length} ${tasksNoun} remaining`;
+
+    function editTask(id, newName) {
+  const editedTaskList = tasks.map((task) => {
+    // if this task has the same ID as the edited task
+    if (id === task.id) {
+      //
+      return { ...task, name: newName };
+    }
+    return task;
+  });
+  setTasks(editedTaskList);
+}
 
 
   return (
@@ -60,7 +75,7 @@ function deleteTask(id) {
         <FilterButton />
         <FilterButton />
       </div>
-      <h2 id="list-heading">3 tasks remaining</h2>
+      <h2 id="list-heading">{headingText}</h2>
       <ul
         role="list"
         className="todo-list stack-large stack-exception"

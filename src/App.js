@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-redundant-roles */
-import React from "react";
+import React, { useState } from "react";
 import Form from "./components/Form";
 import FilterButton from "./components/FilterButton";
 import Todo from "./components/Todo";
@@ -9,14 +9,28 @@ import Todo from "./components/Todo";
 
 function App(props) {
 
-  function addTask(name) {
-    alert(name);
-  }
+  const [tasks, setTasks] = useState(props.tasks);
 
-  const taskList = props.tasks?.map((task) => 
-  <Todo id={task.id} name={task.name} completed={task.completed} key={task.id} /> 
-  );
-  
+
+  function addTask(name) {
+  const newTask = { id: "id", name, completed: false };
+  setTasks([...tasks, newTask]);
+}
+
+
+  const taskList = tasks.map((task) => (
+    <Todo
+      id={task.id}
+      name={task.name}
+      completed={task.completed}
+      key={task.id}
+    />
+  ));
+
+    const tasksNoun = taskList.length !== 1 ? "tasks" : "task";
+    const headingText = `${taskList.length} ${tasksNoun} remaining`;
+
+
   return (
     <div className="todoapp stack-large">
       <h1>TodoMatic</h1>
